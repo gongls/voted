@@ -72,10 +72,23 @@ new Vue({
     },
     save:function(){
       this.upUI();
-      console.log(this.json);
-      $.post('/api/voted',this.json,function(x){
-        console.log(x);
-      });
+      var _self=this;
+      var json=_self.json;
+      console.log('json:',json);
+      $.ajax({
+           type: "POST",
+           url: "/api/voted",
+           data:json,
+           dataType: "json",
+           success: function(data){
+             if(data.err){
+
+             }else{
+               //console.log(data.id);
+               console.log(data);
+             }
+           }
+       });
     },
     upUI:function(){
       var json=this.json;

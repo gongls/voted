@@ -39,12 +39,14 @@ router.get('/api/voted/:id', function(req, res, next) {
   });
 });
 router.post('/api/voted', function(req, res, next) {
-  var obj=req.body;
+  var json=JSON.stringify(req.body);
+  json=JSON.parse(json);
   var time=new Date();
-  obj.time=time;
+  json.time=time;
+  console.log(req);
   //obj.author=req.session.user.name;
   //check
-  db.create('voteds',obj,function(id){
+  db.create('voteds',json,function(id){
     res.json({
       err:false,
       id:id
