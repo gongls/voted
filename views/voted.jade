@@ -1,0 +1,14 @@
+extends layout
+block content
+  div.id(id=id)
+  div#App
+    div.view
+      h1 {{json.title}}
+      h2 {{json.subTitle}}
+      div.items
+        div.item(v-for="item in json.items")
+          h2 {{item.title}}
+          p {{item.value}}
+          p {{item.percent}}
+          div.progress
+            div.progress-bar(role="progressbar",aria-valuenow="{{item.percent}}",aria-valuemin="0",aria-valuemax="100",style="width: {{item.percent}}%;") {{item.percent}}%

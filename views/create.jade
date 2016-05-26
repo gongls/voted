@@ -1,0 +1,28 @@
+extends layout
+block content
+  h1 测试列表
+  
+  p 自己添加检测数据
+  div#App
+    div.edit
+      input(v-model="json.title")
+      input(v-model="json.subTitle")
+      input(v-model="json.select_number")
+      div.items
+        div.item(v-for="item in json.items")
+          input(v-model="item.title")
+          input(v-model="item.value")
+          button(@click="delItem(item)") del
+      button(@click="addItem") add
+      button(@click="upUI") upUI
+      button(@click="save") save
+    div.view
+      h1 {{json.title}}
+      h2 {{json.subTitle}}
+      div.items
+        div.item(v-for="item in json.items")
+          h2 {{item.title}}
+          p {{item.value}}
+          p {{item.percent}}
+          div.progress
+            div.progress-bar(role="progressbar",aria-valuenow="{{item.percent}}",aria-valuemin="0",aria-valuemax="100",style="width: {{item.percent}}%;") {{item.percent}}%
