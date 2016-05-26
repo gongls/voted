@@ -1,0 +1,8 @@
+extends layout
+block content
+  div.id(id=id)
+  div#App
+    div.view
+      ul.items
+        li.item(v-for="item in items")
+          a(href="/voted/{{item._id}}") {{item.title}}

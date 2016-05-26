@@ -9,6 +9,9 @@ router.get('/', function(req, res, next) {
 router.get('/create', function(req, res, next) {
   res.render('create', { title: 'create',js:'create' });
 });
+router.get('/voteds',function(req,res,next){
+  res.render('voteds',{title:'',js:'voteds'});
+});
 router.get('/voted/:id',function(req, res, next) {
   var id=req.params.id;
   res.render('voted', { title:'',id:id,js:'voted'});
@@ -20,6 +23,16 @@ router.get('/api/voteds', function(req, res, next) {
       result:result
     });
   });
+});
+router.put('/api/voted/:id',function(req,res,next){
+  var id=req.params.id;
+  var json=JSON.parse(req.body.json);
+  db.up('voteds',{'_id':ObjectId(id)},{items:json.items},function(){
+    res.json({
+      err:false
+    });
+  });
+  res.json(json);
 });
 router.get('/api/voted/:id', function(req, res, next) {
   var id=req.params.id;
@@ -39,11 +52,10 @@ router.get('/api/voted/:id', function(req, res, next) {
   });
 });
 router.post('/api/voted', function(req, res, next) {
-  var json=JSON.stringify(req.body);
-  json=JSON.parse(json);
+  var json=JSON.parse(req.body.json);
+  //json=JSON.parse(json);
   var time=new Date();
   json.time=time;
-  console.log(req);
   //obj.author=req.session.user.name;
   //check
   db.create('voteds',json,function(id){

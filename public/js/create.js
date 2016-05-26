@@ -75,17 +75,19 @@ new Vue({
       var _self=this;
       var json=_self.json;
       console.log('json:',json);
+      json=JSON.stringify(json);
       $.ajax({
            type: "POST",
            url: "/api/voted",
-           data:json,
+           data:{json:json},
            dataType: "json",
            success: function(data){
              if(data.err){
 
              }else{
-               //console.log(data.id);
-               console.log(data);
+               console.log(data.id);
+               var id=data.id;
+               location.href="/voted/"+id;
              }
            }
        });
@@ -98,7 +100,11 @@ new Vue({
       });
       json.items.map(function(item,index,items){
         var value=parseInt(item.value);
-        item.percent=value/max*100;
+        var percent=Math.floor(value/max*100);
+        if(percent===NaN){
+	    percent=0;
+   	}
+        item.percent=percent;
       });
     }
   },

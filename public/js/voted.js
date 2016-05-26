@@ -13,8 +13,33 @@ new Vue({
       });
       json.items.map(function(item,index,items){
         var value=parseInt(item.value);
-        item.percent=value/max*100;
+        var percent=Math.floor(value/max*100);
+        item.percent=percent;
       });
+    },
+    post:function(newitem){
+       console.log(newitem);
+       newitem.value=parseInt(newitem.value)+1;
+       this.json.items.map(function(item){
+          if(newitem.title===item.title){
+		item=newitem;
+          }
+       });
+       this.upUI();
+       //
+       var id=$('.id').attr('id');
+       var json=this.json;
+       json=JSON.stringify(json);
+       $.ajax({
+         url:'/api/voted/'+id,
+         type:'PUT',
+         data:{json:json},
+         success:function(x){
+          console.log(x);
+          alert('已投票');
+         }
+       });
+       //
     }
   },
   ready:function(){
